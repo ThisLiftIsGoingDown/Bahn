@@ -1,6 +1,3 @@
-import json
-import requests
-
-data = requests.get("http://transport.opendata.ch/v1/stationboard?station=Riehen,%20Bahnhof")
+import json, requests
+data = requests.get("http://transport.opendata.ch/v1/stationboard?station=Riehen,%20Bahnhof").text
 print(data)
-print("1")
