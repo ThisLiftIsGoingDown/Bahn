@@ -1,3 +1,9 @@
-import json, requests
-data = requests.get("http://transport.opendata.ch/v1/stationboard?station=Riehen,%20Bahnhof").text
-print(data)
+import requests
+import json
+URL = "https://fahrplan.search.ch/api/stationboard.json?"
+inf = {'stop':'Einsiedeln',
+        'limit': '2'}
+r = requests.get(url = URL, params= inf)
+jsono = r.text
+d = json.loads(jsono)
+print(d["connections"][1]["time"])
