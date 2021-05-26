@@ -1,4 +1,4 @@
-from tkinter.constants import COMMAND, RIGHT
+from tkinter.constants import COMMAND, LEFT, RIGHT
 from typing import Text
 import requests
 import json
@@ -42,12 +42,14 @@ inf = {'stop': stop,
 r = requests.get(url = URL, params= inf)
 jsono = r.text
 d = json.loads(jsono)
-results = tk.Tk()
-results.title("Public Transit Departure")
-bar = tk.Scrollbar(results)
+resultswind = tk.Tk()
+resultswind.title("Public Transit Departure")
+results = tk.Text(resultswind, height= 50, width=50)
+bar = tk.Scrollbar(resultswind)
 bar.pack(side=RIGHT)
+results.pack(side=LEFT)
 rqstation =  d["stop"]["name"]
-departures = f"\nDepartures from {rqstation}:\n"
+departures = f"\nDepartures from {rqstation}:"
 for i in range(0,numberOfStations ):
     tmpstr = ""
     tmptype = d["connections"][i]["type"]
@@ -56,16 +58,15 @@ for i in range(0,numberOfStations ):
     try:
         tmpdel = d["connections"][i]["dep_delay"]
     except:
-        tmpdel = "No Delay Info Available"
+        tmpdel = "Punctual or No Delay Info Available"
     tmptime = d["connections"][i]["time"]
     tmpstr = f"\nLine: {tmpline}\nDep.time: {tmptime}\nTo: {tmpdest}\nType: {tmptype}\nDelay: {tmpdel}\nStops at:\n"
     tmpstr1 = ""
-    for cazzo in range (0,len(d["connections"][i]["subsequent_stops"])): #Sorry to all italian speaking people for the variable name
+    for cazzo in range (0,len(d["connections"][i]["subsequent_stops"])): 
         dudidu =str(d["connections"][i]["subsequent_stops"][cazzo]["name"])
         tmpstr1 += f"{dudidu}\n"
     tmpstr += tmpstr1
     print(tmpstr)
     departures += tmpstr
-lab = tk.Label(text= departures)
-lab.pack()
-results.mainloop()
+results.insert(tk.END, departures)
+resultswind.mainloop()
