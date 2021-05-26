@@ -36,16 +36,36 @@ number.mainloop()
 print (stop)
 URL = "https://fahrplan.search.ch/api/stationboard.json?"
 inf = {'stop': stop,
-        'limit': numberOfStations}
+        'limit': numberOfStations,
+        'show_delays': '1',
+        'show_subsequent_stops': '1'}
 r = requests.get(url = URL, params= inf)
 jsono = r.text
 d = json.loads(jsono)
 results = tk.Tk()
 results.title("Public Transit Departure")
 bar = tk.Scrollbar(results)
-bar.pack(side=RIGHT, fill=Y)
-departures = list()
+bar.pack(side=RIGHT)
+rqstation =  d["stop"]["name"]
+departures = f"\nDepartures from {rqstation}:\n"
 for i in range(0,numberOfStations ):
-    departures.append(f"")
-
-
+    tmpstr = ""
+    tmptype = d["connections"][i]["type"]
+    tmpline = d["connections"][i]["line"]
+    tmpdest = d["connections"][i]["terminal"]["name"]
+    try:
+        tmpdel = d["connections"][i]["dep_delay"]
+    except:
+        tmpdel = "No Delay Info Available"
+    tmptime = d["connections"][i]["time"]
+    tmpstr = f"\nLine: {tmpline}\nDep.time: {tmptime}\nTo: {tmpdest}\nType: {tmptype}\nDelay: {tmpdel}\nStops at:\n"
+    tmpstr1 = ""
+    for cazzo in range (0,len(d["connections"][i]["subsequent_stops"])): #Sorry to all italian speaking people for the variable name
+        dudidu =str(d["connections"][i]["subsequent_stops"][cazzo]["name"])
+        tmpstr1 += f"{dudidu}\n"
+    tmpstr += tmpstr1
+    print(tmpstr)
+    departures += tmpstr
+lab = tk.Label(text= departures)
+lab.pack()
+results.mainloop()
