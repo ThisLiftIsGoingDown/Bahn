@@ -38,7 +38,8 @@ URL = "https://fahrplan.search.ch/api/stationboard.json?"
 inf = {'stop': stop,
         'limit': numberOfStations,
         'show_delays': '1',
-        'show_subsequent_stops': '1'}
+        'show_subsequent_stops': '1',
+        'show_tracks': "1"}
 r = requests.get(url = URL, params= inf)
 jsono = r.text
 d = json.loads(jsono)
@@ -55,12 +56,13 @@ for i in range(0,numberOfStations ):
     tmptype = d["connections"][i]["type"]
     tmpline = d["connections"][i]["line"]
     tmpdest = d["connections"][i]["terminal"]["name"]
+    tmptrc = d["connections"][i]["track"]
     try:
         tmpdel = d["connections"][i]["dep_delay"]
     except:
         tmpdel = "Punctual or No Delay Info Available"
     tmptime = d["connections"][i]["time"]
-    tmpstr = f"\nLine: {tmpline}\nDep.time: {tmptime}\nTo: {tmpdest}\nType: {tmptype}\nDelay: {tmpdel}\nStops at:\n"
+    tmpstr = f"\nLine: {tmpline}\nDep.time: {tmptime}\nTo: {tmpdest}\nType: {tmptype}\nDelay: {tmpdel}\nTrack: {tmptrc}\nStops at:\n"
     tmpstr1 = ""
     for cazzo in range (0,len(d["connections"][i]["subsequent_stops"])): 
         dudidu =str(d["connections"][i]["subsequent_stops"][cazzo]["name"])
