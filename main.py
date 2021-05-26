@@ -1,8 +1,7 @@
-from tkinter.constants import COMMAND
+from tkinter.constants import COMMAND, RIGHT
 from typing import Text
 import requests
 import json
-import keyboard
 import tkinter as tk
 def start():
     global stop
@@ -41,6 +40,12 @@ inf = {'stop': stop,
 r = requests.get(url = URL, params= inf)
 jsono = r.text
 d = json.loads(jsono)
+results = tk.Tk()
+results.title("Public Transit Departure")
+bar = tk.Scrollbar(results)
+bar.pack(side=RIGHT, fill=Y)
+departures = list()
 for i in range(0,numberOfStations ):
-    print(d["connections"][i]["line"])
+    departures.append(f"")
+
 
