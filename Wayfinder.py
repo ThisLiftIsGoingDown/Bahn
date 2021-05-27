@@ -56,7 +56,7 @@ def Wayfinder():
     totmp = str(d["connections"][0]["to"])
     depttmp = str(d["connections"][0]["departure"])
     arrttmp = str(d["connections"][0]["arrival"])
-    conn = f"Your connection from: {frotmp} to: {totmp}:\n\nDeparture: {depttmp}\nArrival: {arrttmp}\n\n Please Note: If no line and Track are displayed please walk to designated station\n\n"
+    conn = f"Your connection from: {frotmp} to: {totmp}:\n\nDeparture: {depttmp}\nArrival: {arrttmp}\n\n"
     ergebnis = conn
     for i, leg in enumerate(d["connections"][0]["legs"]):
         tmpstr = ""
