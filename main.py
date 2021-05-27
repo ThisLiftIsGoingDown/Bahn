@@ -56,7 +56,10 @@ for i in range(0,numberOfStations ):
     tmptype = d["connections"][i]["type"]
     tmpline = d["connections"][i]["line"]
     tmpdest = d["connections"][i]["terminal"]["name"]
-    tmptrc = d["connections"][i]["track"]
+    try:
+        tmptrc = d["connections"][i]["track"]
+    except:
+        tmptrc = "No track info Available"
     try:
         tmpdel = d["connections"][i]["dep_delay"]
     except:
