@@ -47,7 +47,7 @@ def Wayfinder():
     master = Tk()
     master.title("Your Route")
     C = Button(text="Copy to Clipboard", command= copy)
-    infes =Text(master, height=15, width= 110)
+    infes =Text(master, height=15, width= 150)
     bar = Scrollbar(master)
     bar.pack(side=RIGHT)
     infes.pack()
@@ -77,8 +77,11 @@ def Wayfinder():
                 firsttempbin = str(leg["track"])
             except:
                 firsttempbin = "-"
-            firsttempbin = f"from track nr.{firsttempbin}"
-            tmpstr = f"In {firsttemp} take the {firsttempline} in driection of {firsttempterminal} to {firsttempexit} {firsttempbin} at {firsttemptime}\nThen:\n"
+            if firsttempline == "-" and firsttempbin == "-":
+                tmpstr = f"Walk From {firsttemp} to {firsttempexit}\nThen:\n"
+            else:
+                firsttempbin = f"from track nr.{firsttempbin}"
+                tmpstr = f"In {firsttemp} take the {firsttempline} in driection of {firsttempterminal} to {firsttempexit} {firsttempbin} at {firsttemptime}\nThen:\n"
         else:
             firsttemp = str(leg["name"])
             firsttemptime= str(leg["arrival"])
