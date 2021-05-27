@@ -1,6 +1,7 @@
 import requests
 from tkinter import *
 import json
+import pyperclip
 def Wayfinder():
     def bttnAct():
         global fr
@@ -40,11 +41,17 @@ def Wayfinder():
     jsono = r.text
     d = json.loads(jsono)
 
+    def copy():
+        pyperclip.copy(kek)
+
     master = Tk()
+    master.title("Your Route")
+    C = Button(text="Copy to Clipboard", command= copy)
     infes =Text(master, height=15, width= 110)
     bar = Scrollbar(master)
     bar.pack(side=RIGHT)
     infes.pack()
+    C.pack()
     frotmp = str(d["connections"][0]["from"])
     totmp = str(d["connections"][0]["to"])
     depttmp = str(d["connections"][0]["departure"])
@@ -78,6 +85,8 @@ def Wayfinder():
             tmpstr = f"You arrive in {firsttemp} at {firsttemptime}"
         ergebnis+= tmpstr
     print (ergebnis)
+    global kek
+    kek = ergebnis
     infes.insert(END, ergebnis)
     mainloop()
     return None

@@ -3,6 +3,7 @@ from typing import Text
 import requests
 import json
 import tkinter as tk
+import pyperclip
 def Board():
     def start():
         global stop
@@ -44,12 +45,16 @@ def Board():
     r = requests.get(url = URL, params= inf)
     jsono = r.text
     d = json.loads(jsono)
+    def copy1():
+        pyperclip.copy(kek1)
     resultswind = tk.Tk()
+    Y = tk.Button(text="Copy to Clipboard",command=copy1)
     resultswind.title("Public Transit Departure")
     results = tk.Text(resultswind, height= 50, width=50)
     bar = tk.Scrollbar(resultswind)
     bar.pack(side=RIGHT)
     results.pack(side=LEFT)
+    Y.pack()
     rqstation =  d["stop"]["name"]
     departures = f"\nDepartures from {rqstation}:"
     for i in range(0,numberOfStations ):
@@ -74,6 +79,8 @@ def Board():
         tmpstr += tmpstr1
         print(tmpstr)
         departures += tmpstr
+        global kek1
+        kek1 = departures
     results.insert(tk.END, departures)
     resultswind.mainloop()
     return None
