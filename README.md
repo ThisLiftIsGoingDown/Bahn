@@ -1,1 +1,1 @@
-This is going to be a little utility to get public transit departures in switzerland
+This isa little utility to get public transit departures and routes in switzerland
